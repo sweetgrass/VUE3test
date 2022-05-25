@@ -1,14 +1,15 @@
 import { createStore } from 'vuex'
 import {login as Login} from '../api/index.js'
-
+import {getCurrentTalkList} from '../api/index.js'
 const store = createStore({
   state: {
     userInfo: {
       name:'myName'
     },
     user:{},
-    isLogined:false,
-    currentTab:'消息'
+    isLogined:true,
+    currentTab:'消息',
+    currentList:[]
   },
   mutations: {
     getUserInfo (state, name) {
@@ -20,6 +21,9 @@ const store = createStore({
     logIn(state,user){
       state.isLogined = true;
       state.user = user;
+    },
+    getList(state,list){
+      state.currentList = list;
     }
   },
   actions: {
@@ -41,8 +45,19 @@ const store = createStore({
       }
       catch(e){
         console.log(e);
-        return 'failed'
+        return 'failed';
       }
+    },
+    async getlist({commit},playload){
+      try{
+        let res = await getCurrentTalkList();
+        commit('getList',res.data);
+        return 'success'
+      }
+      catch(e){
+        return 'fail'
+      }
+      
     }
   },
   getters: {

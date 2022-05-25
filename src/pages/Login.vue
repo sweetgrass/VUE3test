@@ -26,7 +26,7 @@
             <div v-show="mode == 'acc'" class="inputArea">
               <div class="inputWrapper">
                 <span class='valInfo' :class="[unTextStatus?'okText':'errorText']">{{unText}}</span>
-                <input type="text" placeholder="手机号或邮箱" v-model='userName' @blur="valiUN"/>
+                <input type="text" placeholder="用户名、手机号、邮箱" v-model='userName' @blur="valiUN"/>
               </div>
               <div class="inputWrapper">
                 <span class="valInfo">{{passText}}</span>
@@ -35,11 +35,12 @@
             </div>
             <div v-show="mode == 'tel'" class="inputArea">
               <div class="inputWrapper">
-                <input type="text" placeholder="请输入手机号" />
+                <input type="text" placeholder="请输入手机号" v-model="mbnumber" @blur="valiMB"/>
                 <SendCodeBtn class='sendCode' :isSending='sendStatus' :countTime='10' @RequestCode='requestCode'></SendCodeBtn>
               </div>
               <div class="inputWrapper">
-                <input type="text" placeholder="请输入验证码" />
+                <span class="valInfo" :class="[codeTextStatus?'okText':'errorText']">{{codeText}}</span>
+                <input type="text" placeholder="请输入验证码" v-model="logincode" @blur="valiCode"/>
               </div>
             </div>
           </div>
@@ -83,27 +84,45 @@ const valiUN = ()=>{
   }
   else if(!isNaN(un*1)){
     unok = mobileReg.test(un);
-    unText.value = unok?'ok':'电话号码有误！'
+    unText.value = unok?'ok':'手机号有误！'
   }
   else{
     unok = un.length>=6&&un.length<=16;
     unText.value = unok?'ok':'用户名长度不合格！'
   }
-  if(unok){
-    unTextStatus.value = true;
-  }
-  else{
-    unTextStatus.value = false;
-  }
+  unTextStatus.value = unok;
+  return unok;
 }
-
 let passwd = ref('');
 let passText = ref('');
 const valiPass = ()=>{
   passText.value = '正在验证...'
-  setTimeout(()=>{passText.value = 'Correct'},1000)
+  setTimeout(()=>{passText.value = 'ok'},1000)
 }
 
+//input validate 2
+let mbnumber = ref('');
+let logincode = ref('');
+let codeText = ref('');
+let codeTextStatus = ref(true);
+const valiMB = ()=>{
+  let mbok = false;
+  let mb = mbnumber.value;
+  const mobileReg = /^1[0-9]{10}$/;
+  mbok = mobileReg.test(mb);
+  codeText.value = mbok?'ok':'手机号有误！'
+  codeTextStatus.value = mbok
+  return mbok;
+}
+const valiCode = ()=>{
+  let codeok = false;
+  let code = logincode.value;
+  const codetst = /^[0-9]{6}$/;
+  codeok = codetst.test(code);
+  codeText.value = codeok?'ok':'验证码格式不正确'
+  codeTextStatus.value = codeok;
+  return codeok;
+}
 let sendStatus = ref(false);
 let requestCode = (type)=>{
     if(type == 1){
@@ -116,13 +135,15 @@ let requestCode = (type)=>{
 }
 
 let loginTo = async ()=>{
-  if(mode == 'acc'){
-    valiUN();
-    valiPass();
+  let isok = false;
+  if(mode.value == 'acc'){
+    isok = valiUN();
   }
   else{
-    
+    isok = valiMB()&&valiCode();
   }
+  console.log(isok);
+  if(!isok){return}
   let res = await store.dispatch('login',{un:userName.value,up:passwd.value});
   if(res == 'ok'){
     router.push('/home');

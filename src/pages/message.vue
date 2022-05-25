@@ -1,18 +1,31 @@
 <template>
-  <div>
-    <div>我是信息页</div>
-    <div @click="talkToSomebody">张三</div>
+  <div class='msglist'>
+    <div v-for='item in listhere' :key="item.latestMessage.time" @click="talkToSB(item.username)" class='aa'>
+      <div>{{item.username}}</div>
+      <div class="controlArea">=</div>
+      <div class="msg">{{item.latestMessage.text}}</div>
+    </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref,onBeforeMount } from "vue";
 import {useRouter} from 'vue-router'
+import {useStore} from 'vuex'
 import TalkTo from "../pages/talkto.vue";
 
+let store = useStore();
 let router = useRouter();
-let talkToSomebody = ()=>{
+let talkToSB = (un)=>{
+  console.log(un)
   router.push('/talkTo/zs')
 }
+let listok = ref(false);
+let listhere = ref([]);
+onBeforeMount(async ()=>{
+  let lst = await store.dispatch('getlist');
+  listok.value = lst=='success'?true:false;
+  listhere.value = store.state.currentList;
+})
 </script>
 <style scoped>
 .fullPage {

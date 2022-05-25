@@ -79,4 +79,60 @@ let login = (data)=>{
         
     })
 }
-export { getHistoryByUID,login } 
+let getCurrentTalkList = ()=>{
+    let currentlist = [
+        {
+            username:'zs',
+            latestMessage:{
+                from:'me',
+                to:'zs',
+                text:'哈哈哈哈',
+                time:'2022/5/16-21:09:05'
+            }
+        },
+        {
+            username:'ls',
+            latestMessage:{
+                from:'me',
+                to:'ls',
+                text:'今天去干嘛了？',
+                time:'2022/5/17-11:09:05'
+            }
+        },
+        {
+            username:'ww',
+            latestMessage:{
+                from:'ww',
+                to:'me',
+                text:'晚上一起吃饭？',
+                time:'2022/5/16-21:09:05'
+            }
+        },
+        {
+            username:'zl',
+            latestMessage:{
+                from:'zl',
+                to:'me',
+                text:'好的，收到！',
+                time:'2022/5/22-16:09:05'
+            }
+        }
+    ]
+    return new Promise((resolve,reject)=>{
+        if(Math.random()>0.1){
+            setTimeout(()=>{
+                resolve({
+                    status:'ok',
+                    data:currentlist
+                })
+            },1000)
+        }
+        else{
+            reject({
+                status:'error',
+                code:'500'
+            })
+        }
+    })
+}
+export { getHistoryByUID,login,getCurrentTalkList } 
