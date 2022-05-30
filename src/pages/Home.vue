@@ -29,7 +29,7 @@ const tabs = ref([
   },
   {
     name: "关于",
-    path: "/About",
+    path: "/about",
   },
 ]);
 const tabChange = (name) => {

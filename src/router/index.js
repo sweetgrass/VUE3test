@@ -8,6 +8,7 @@ import About from '../pages/About.vue'
 import LoginPage from '../pages/Login.vue'
 import RegPage from '../pages/Reg.vue'
 import TalkTo from '../pages/talkto.vue'
+import AboutMe from '../pages/AboutMe.vue'
 
 const routerHistory = createWebHistory()
 // createWebHashHistory hash 路由
@@ -52,8 +53,14 @@ const router = createRouter({
       component:Find
     },
     {
-      path:'/About',
-      component:About
+      path:'/about',
+      component:About,
+      children:[
+        {
+          path:'me',
+          component:AboutMe
+        }
+      ]
     },
   ]
 })

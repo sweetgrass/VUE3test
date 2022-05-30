@@ -1,5 +1,6 @@
 <template>
   <div class='msglist'>
+    <div v-if='loading'>正在获取聊天数据...</div>
     <Msbar v-for='item in listhere' :key="item.latestMessage.time" @click="talkToSB(item.username)" :item='item'></Msbar>
   </div>
 </template>
@@ -18,8 +19,10 @@ let talkToSB = (un)=>{
 }
 let listok = ref(false);
 let listhere = ref([]);
+let loading = ref(true)
 onBeforeMount(async ()=>{
   let lst = await store.dispatch('getlist');
+  loading.value = false;
   listok.value = lst=='success'?true:false;
   listhere.value = store.state.currentList;
 })
