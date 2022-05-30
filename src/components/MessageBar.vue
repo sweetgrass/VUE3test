@@ -8,7 +8,7 @@
                 <div class="un">{{props.item.username}}</div>
                 <div class="time">{{props.item.latestMessage.time}}</div>
             </div>
-            <div class="msg">{{props.item.latestMessage.text}}</div>
+            <div class="msg">{{props.item.latestMessage.text.substr(0,20)}}</div>
         </div>
         
     </div>

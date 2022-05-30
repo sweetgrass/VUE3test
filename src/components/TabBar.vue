@@ -4,8 +4,8 @@
         <div v-for='item in tabs' :key='item.name' :class="['tabBar',item.name==props.choosed?'isChoosed':'']">
             <!-- 需要传入type以及激活和普通两张图片 -->
             <div v-if="type=='img'" class="tabIcon">
-                <img v-show='props.choosed!=item.name' src="item.normalImg" alt="">
-                <img v-show='props.choosed==item.name' src="item.activeImg" alt="">
+                <img v-show='props.choosed!=item.name' src="" alt="">
+                <img v-show='props.choosed==item.name' src="" alt="">
             </div>
             <!-- 使用iconFont的话，只需要改变颜色 -->
             <div v-if="type=='iconFont'" class="tabIcon">
