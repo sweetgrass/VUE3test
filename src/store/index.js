@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import {login as Login} from '../api/index.js'
-import {getCurrentTalkList} from '../api/index.js'
+import {getCurrentTalkList,getFriendList} from '../api/index.js'
 const store = createStore({
   state: {
     userInfo: {
@@ -9,13 +9,15 @@ const store = createStore({
     user:{},
     isLogined:true,
     currentTab:'消息',
-    currentList:[]
+    currentList:[],
+    friendList:[]
   },
   mutations: {
     getUserInfo (state, name) {
       state.userInfo.name = name
     },
     changeTab(state,name){
+      if(state.currentTab == name){return}
       state.currentTab = name;
     },
     logIn(state,user){
@@ -24,6 +26,9 @@ const store = createStore({
     },
     getList(state,list){
       state.currentList = list;
+    },
+    getFriends(state,flist){
+      state.friendList = flist;
     }
   },
   actions: {
@@ -58,6 +63,16 @@ const store = createStore({
         return 'fail'
       }
       
+    },
+    async getFriendList({commit},playload){
+      try{
+        let res = await getFriendList();
+        commit('getFriends',res);
+        return 'success';
+      }
+      catch(e){
+        console.log(e)
+      }
     }
   },
   getters: {

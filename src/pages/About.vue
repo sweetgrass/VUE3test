@@ -79,7 +79,7 @@ let aboutme = ()=>{
 .funcslot{
     padding: 10px 0px;
     box-sizing: border-box;
-    
+    padding-left: 10px;
 }
 .funcslot:nth-last-child(n+2){
     border-bottom: 1px solid #aaa;

@@ -46,14 +46,17 @@ const router = createRouter({
     },
     {
       path:'/fBooks',
+      name:'fBooks',
       component:FBooks
     },
     {
       path:'/find',
+      name:'find',
       component:Find
     },
     {
       path:'/about',
+      name:'about',
       component:About,
       children:[
         {
@@ -64,7 +67,21 @@ const router = createRouter({
     },
   ]
 })
+const pathTabName = {
+  'home':'消息',
+  'fBooks':'通讯录',
+  'find':'发现',
+  'about':'关于'
+}
 router.beforeEach(async (to, from) => {
+  //--------------通过路由地址访问时，解决选中tab的初始化问题---------------
+  let toRootPath = to.fullPath.split('/')[1];
+  if(toRootPath!=undefined&&pathTabName[toRootPath]!=undefined){
+    let name = pathTabName[toRootPath]
+    store.commit('changeTab',name);
+  }
+
+  //-----------------登录验证部分--------------------
   let noneedLoginPage = ['login','reg']
   // 检查用户是否已登录 // ❗️ 避免无限重定向
   if (!store.state.isLogined&&!noneedLoginPage.includes(to.name)) {

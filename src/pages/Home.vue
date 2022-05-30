@@ -2,7 +2,17 @@
   <div class="container">
     <div v-if='store.state.isLogined' class="topbar">{{ currentTab }}</div>
     <TabBar v-if='store.state.isLogined' type="" :tabs="tabs" @tabChange="tabChange" containerHeight="60px" :choosed='currentTab'></TabBar>
-    <router-view></router-view>
+    <!-- 需要keep-alive 和 transition的router-view 都需要用此方法进行包裹 -->
+    <router-view v-slot='{Component,route}'>
+      <keep-alive>
+        <component
+            :is="Component"
+            :key="route.meta.usePathKey ? route.path : undefined"
+          />
+      </keep-alive>
+    </router-view>
+    
+    
   </div>
 </template>
 
@@ -34,7 +44,6 @@ const tabs = ref([
 ]);
 const tabChange = (name) => {
     store.commit('changeTab',name);
-  
 };
 </script>
 
@@ -45,11 +54,15 @@ const tabChange = (name) => {
   margin: auto;
   box-sizing: border-box;
   position: relative;
+  padding:60px 0;
 }
 .topbar{
     height:60px;
     width:100%;
     line-height:60px;
     background: rgb(240,240,240);
+    position:fixed;
+    top:0;
+    z-index: 555;
 }
 </style>

@@ -2,13 +2,13 @@
   <div class='msglist'>
     <div v-if='loading'>正在获取聊天数据...</div>
     <Msbar v-for='item in listhere' :key="item.latestMessage.time" @click="talkToSB(item.username)" :item='item'></Msbar>
+    
   </div>
 </template>
 <script setup>
-import { ref,onBeforeMount } from "vue";
+import { ref,onBeforeMount,computed } from "vue";
 import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import TalkTo from "../pages/talkto.vue";
+import {useStore} from 'vuex';
 import Msbar from '../components/MessageBar.vue';
 
 let store = useStore();
@@ -18,13 +18,14 @@ let talkToSB = (un)=>{
   router.push('/talkTo/zs')
 }
 let listok = ref(false);
-let listhere = ref([]);
+let listhere = computed(()=>{
+  return store.state.currentList;
+});
 let loading = ref(true)
 onBeforeMount(async ()=>{
   let lst = await store.dispatch('getlist');
   loading.value = false;
   listok.value = lst=='success'?true:false;
-  listhere.value = store.state.currentList;
 })
 </script>
 <style scoped>

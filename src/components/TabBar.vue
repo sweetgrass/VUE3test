@@ -52,9 +52,10 @@ const changeCurrent= (event)=>{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     background: rgb(240,240,240);
+    z-index: 555;
 }
 .bottomBar a{
     text-decoration: none;
