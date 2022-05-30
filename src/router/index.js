@@ -3,6 +3,7 @@ import store from '../store/index.js';
 import HelloWorld from '../components/HelloWorld.vue'
 import message from '../pages/message.vue'
 import FBooks from '../pages/FBooks.vue'
+import Friend from '../pages/Friend.vue'
 import Find from '../pages/Find.vue'
 import About from '../pages/About.vue'
 import LoginPage from '../pages/Login.vue'
@@ -20,39 +21,68 @@ const router = createRouter({
     {
       path:'/login',
       name:'login',
-      component:LoginPage
+      component:LoginPage,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       path:'/reg',
       name:'reg',
-      component:RegPage
+      component:RegPage,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       name:'home',
       path: '/',
       alias:'/home',
-      component:message
+      component:message,
+      meta:{
+        keepAlive:true
+      }
       
     },
     {
       path:'/message',
       name:'message',
-      component:message
+      component:message,
+      meta:{
+        keepAlive:true
+      }
     },
     {
       path:'/talkTo/:uid',
       name:'talkTo',
-      component:TalkTo
+      component:TalkTo,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       path:'/fBooks',
       name:'fBooks',
-      component:FBooks
+      component:FBooks,
+      meta:{
+        keepAlive:true
+      }
+    },
+    {
+      path:'/friendInfo/:uid',
+      name:'friendInfo',
+      component:Friend,
+      meta:{
+        keepAlive:false
+      }
     },
     {
       path:'/find',
       name:'find',
-      component:Find
+      component:Find,
+      meta:{
+        keepAlive:true
+      }
     },
     {
       path:'/about',
@@ -63,7 +93,10 @@ const router = createRouter({
           path:'me',
           component:AboutMe
         }
-      ]
+      ],
+      meta:{
+        keepAlive:true
+      }
     },
   ]
 })

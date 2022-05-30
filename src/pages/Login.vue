@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body">
+  <!-- <teleport to="body"> -->
     <div class="fullPageContainer lgc">
       <div class="loginContainer">
         <div class="head">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-  </teleport>
+  <!-- </teleport> -->
 </template>
 <script setup>
 import { useStore } from "vuex";

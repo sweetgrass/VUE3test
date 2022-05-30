@@ -1,12 +1,6 @@
 <template>
     <div class="abtme">
-        <div class="shortcut" @click='aboutme'>
-            <div class="me" >me</div>
-            <div class="uinfo">
-                <div class="un">myusername</div>
-                <div class="uid">uid:123456</div>
-            </div>
-        </div>
+        <UserCard @click='aboutme' :user='user'>me</UserCard>
         <div class="bottomarea">
             <div class="more">
                 <div class="funcslot">收藏</div>
@@ -15,11 +9,18 @@
             </div>
             <div class="setup">设置</div>
         </div>
-        <router-view></router-view>
+        
     </div>
+    <router-view></router-view>
 </template>
 <script setup>
+import {ref} from 'vue';
 import {useRouter} from 'vue-router';
+import UserCard from '../components/UserCard.vue'
+let user = ref({
+    name:'是我',
+    uid:123456
+})
 let router = useRouter();
 let aboutme = ()=>{
     router.push('/about/me');
@@ -29,41 +30,7 @@ let aboutme = ()=>{
 .abtme{
     position: relative;
 }
-.shortcut{
-    position: relative;
-    width:100%;
-    height:100px;
-    cursor:pointer;
-}
-.me{
-    position: absolute;
-    top:10px;
-    left:10px;
-    width:80px;
-    height:80px;
-    line-height: 80px;
-    background: #009f69;
-    color:white;
-    font-weight: 600;
-    font-size: 20px;
-}
-.uinfo{
-    display: inline-block;
-    position: absolute;
-    top:10px;
-    left:100px;
-    text-align: left;
-}
-.uinfo>div{
-    line-height: 40px;
-}
-.un{
-    font-size: 18px;
-}
-.uid{
-    font-size: 15px;
-    color:#777;
-}
+
 .bottomarea{
     position: relative;
 }

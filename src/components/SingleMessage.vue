@@ -74,6 +74,7 @@ const props = defineProps({
     border-radius: 10px;
     font-size: 15px;
     line-height: 20px;
+    text-align: left;
 }
 .isMe .msgtxt{
     background: #1ec58d;

@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body">
+  <!-- <teleport to="body"> -->
     <div class="fullPageContainer">
       <div class='top'>
         <div class="returnto" @click='returntoabout'>返回</div>
@@ -13,7 +13,7 @@
         <div class="each">其他</div>
       </div>
     </div>
-  </teleport>
+  <!-- </teleport> -->
 </template>
 <script setup>
 import {useRouter} from 'vue-router';
@@ -48,5 +48,6 @@ let returntoabout = ()=>{
     border-bottom: 1px solid #eee;
     cursor:pointer;
     padding:0 20px;
+    text-align: left;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <teleport to="body">
+  <!-- <teleport to="body"> -->
     <div class="fullPageContainer">
       <suspense>
         <div classs="chatboxcontainer">
           <div class="chatBoxTop">
             <div class="close" @click="returnTo">返回</div>
-            <div class="name">张三</div>
+            <div class="name">{{uname}}</div>
           </div>
           <div class="chatBox" :ref="setChatRef">
             <SingleMessage
@@ -35,8 +35,13 @@
         </div>
       </suspense>
     </div>
-  </teleport>
+  <!-- </teleport> -->
 </template>
+<script>
+export default{
+  name:'talkto'
+}
+</script>
 <script setup>
 import SingleMessage from "../components/SingleMessage.vue";
 import { ref, defineProps, onBeforeMount, onUpdated, onMounted } from "vue";
@@ -70,9 +75,10 @@ let scrollTo = function () {
   let rf = chatRef.value[0];
   rf.lastElementChild.scrollIntoView();
 };
+let uname = ref('');
 onBeforeMount(async () => {
-  let uid = router.currentRoute.value.params.uid;
-  let tp = await getHistoryByUID(uid);
+  uname.value = router.currentRoute.value.params.uid;
+  let tp = await getHistoryByUID(uname.value);
   msHistory.value = tp.messages;
 });
 onUpdated((to, from) => {

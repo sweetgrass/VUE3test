@@ -1,5 +1,5 @@
 <template>
-<teleport to='body'>
+<!-- <teleport to='body'> -->
     <div class='fullPageContainer'>
         <div class="regc">
             <div class="labelc">
@@ -18,7 +18,7 @@
             <button class='regbtn'>注册</button>
         </div>
     </div>
-</teleport>
+<!-- </teleport> -->
     
 </template>
 <script setup>

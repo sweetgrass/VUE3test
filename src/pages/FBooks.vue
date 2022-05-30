@@ -23,6 +23,11 @@
     </div>
   </div>
 </template>
+<script>
+    export default {
+      name: 'fbooks',
+    };
+</script>
 <script setup>
 import IconBar from "../components/IconBar.vue";
 import { ref, onBeforeMount, computed } from "vue";
@@ -39,12 +44,14 @@ onBeforeMount(async () => {
     loading.value = false;
   }
 });
+let router = useRouter();
 let friendInfo = (e) => {
   let path = e.path;
   for(let i = 0;i<path.length;i++){
      
       if(path[i].className=='alc'){
           let uid = path[i].dataset.uid;
+          router.push('/friendInfo/'+uid);
       }
   }
 };
