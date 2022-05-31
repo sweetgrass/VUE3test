@@ -1,3 +1,4 @@
+//通过uid来生成与对应用户的聊天记录
 let getHistoryByUID = function (uid) {
     let a = {
         status: 'success',
@@ -20,33 +21,8 @@ let getHistoryByUID = function (uid) {
             },
             {
                 user: `me`,
-                text: '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！',
+                text: `${Math.random()+''}`,
                 time: '2022/5/16-21:04:05'
-            },
-            {
-                user: `${uid}`,
-                text: '你好！',
-                time: '2022/5/16-21:05:05'
-            },
-            {
-                user: `me`,
-                text: '你好！',
-                time: '2022/5/16-21:06:05'
-            },
-            {
-                user: `${uid}`,
-                text: '你好你好！',
-                time: '2022/5/16-21:07:05'
-            },
-            {
-                user: 'me',
-                text: '哈哈哈！',
-                time: '2022/5/16-21:08:05'
-            },
-            {
-                user: 'me',
-                text: '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！',
-                time: '2022/5/16-21:09:05'
             }
         ]
 
@@ -56,6 +32,7 @@ let getHistoryByUID = function (uid) {
     })
     // 
 }
+//登录功能模拟
 let login = (data) => {
     return new Promise((resolve, reject) => {
         if (Math.random() > 0.1) {
@@ -75,6 +52,7 @@ let login = (data) => {
 
     })
 }
+//消息列表界面消息列表模拟
 let getCurrentTalkList = () => {
     let currentlist = [
         {
@@ -131,6 +109,7 @@ let getCurrentTalkList = () => {
         }
     })
 }
+//好友列表数据模拟
 let getFriendList = () => {
     let fakelist = [
         {

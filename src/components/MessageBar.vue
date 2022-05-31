@@ -1,14 +1,14 @@
 <template>
     <div class='msbar'>
         <div class="barleft">
-            <div class='uname'>{{props.item.username}}</div>
+            <div class='uname'>{{props.item.to}}</div>
         </div>
         <div class="barright">
             <div class="spinfo">
-                <div class="un">{{props.item.username}}</div>
-                <div class="time">{{props.item.latestMessage.time}}</div>
+                <div class="un">{{props.item.to}}</div>
+                <div class="time">{{props.item.time}}</div>
             </div>
-            <div class="msg">{{props.item.latestMessage.text.substr(0,20)}}</div>
+            <div class="msg">{{props.item.text.substr(0,20)}}</div>
         </div>
         
     </div>

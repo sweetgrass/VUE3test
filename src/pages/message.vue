@@ -3,8 +3,8 @@
     <div v-if="loading">正在获取聊天数据...</div>
     <Msbar
       v-for="item in listhere"
-      :key="item.latestMessage.time"
-      @click="talkToSB(item.username)"
+      :key="item.time"
+      @click="talkToSB(item.to)"
       :item="item"
     ></Msbar>
   </div>
@@ -32,7 +32,7 @@ let listhere = computed(() => {
 });
 let loading = ref(true);
 onBeforeMount(async () => {
-  let lst = await store.dispatch("getlist");
+  let lst = await store.dispatch("getCurrentTalkList");
   loading.value = false;
   listok.value = lst == "success" ? true : false;
 });
