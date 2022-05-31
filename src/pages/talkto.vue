@@ -82,7 +82,7 @@ const setChatRef = (el) => {
 };
 let scrollTo = function () {
   //先判断是否加载完成，否则会出错
-  if(!listOk){
+  if(!listOk||msHistory.value.length==0){
     return
   }
   else{

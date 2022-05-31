@@ -7,11 +7,16 @@ const store = createStore({
     userInfo: {
       name: 'myName'
     },
+    // 最近聊天用户列表
     userlist: ['zs', 'ls', 'ww', 'zl'],
     user: {},
+    // 登录状态
     isLogined: true,
+    //最近选中的tab，用于在不同路由跳转的时候也能保持tab正确选中
     currentTab: '消息',
+    //最近聊天概览消息列表，用于message页显示最近的聊天记录
     currentList: [],
+    // 好友列表
     friendList: []
   },
   getters: {
@@ -103,8 +108,34 @@ const store = createStore({
         return 'success';
       }
       try {
-        let res = await getHistoryByUID(uid);
-        commit('getMsgList', res);
+        //如果是新建的聊天，则需要
+        // 1、更新最近聊天用户列表
+        // 2、在store中增加该用户的消息历史记录，虽然为空
+        // 3、在最近聊天消息列表中增加一条空记录，让会话出现在message页面
+        if(!state.userlist.includes(uid)){
+            //将用户存入最近聊天用户列表
+            state.userlist.push(uid);
+            // 在store中增加该用户历史记录
+            let fres = {
+              toUID:uid,
+              messages:[]
+            }
+            commit('getMsgList',fres)
+            // 生成空白消息到最近聊天概览列表
+            let now = new Date();
+            state.currentList.push({
+              to:uid,
+              user:'me',
+              text:'',
+              time:now.getFullYear()+'/'+now.getMonth()+'/'+now.getDay()+'-'+(now+'').split(' ')[4]
+            })
+        }
+        //否则直接api获取假数据
+        else{
+          let res = await getHistoryByUID(uid);
+          commit('getMsgList', res);
+        }
+        
         return 'success';
 
       }
@@ -116,12 +147,25 @@ const store = createStore({
     //获取最近聊天列表
     async getCurrentTalkList({ state, commit }, playload) {
       let users = state.userlist;
+      //等待初始化
       await function () { return new Promise((resolve) => { setTimeout(() => { resolve(1) }, 1000) }) }();
       try {
         let list = [];
         users.forEach(uid => {
           let mslist = state[uid];
-          let msg = mslist[mslist.length - 1];
+          let msg = {};
+          //如果只是打开过聊天对话框，那么该用户历史消息列表中不会有记录，则需要生成一条空白消息
+          if(mslist.length==0){
+            msg = {
+              to:uid,
+              user:'me',
+              text:'',
+              time:now.getFullYear()+'/'+now.getMonth()+'/'+now.getDay()+'-'+(now+'').split(' ')[4]
+            }
+          }
+          else{
+            msg = mslist[mslist.length - 1];
+          }
           msg.to = uid;
           list.push(msg);
 

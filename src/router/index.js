@@ -102,6 +102,7 @@ const router = createRouter({
 })
 const pathTabName = {
   'home':'消息',
+  'message':'消息',
   'fBooks':'通讯录',
   'find':'发现',
   'about':'关于'
