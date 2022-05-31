@@ -7,7 +7,9 @@
             <div class="close" @click="returnTo">返回</div>
             <div class="name">{{uname}}</div>
           </div>
+          <div v-if='!listOk'>正在获取...</div>
           <div class="chatBox" :ref="setChatRef">
+            
             <SingleMessage
               v-for="ms in msHistory"
               :key="ms.time"
@@ -23,6 +25,7 @@
                 class="msinput"
                 @focus="checkType(1)"
                 @blur="checkType(2)"
+                @keydown.enter="sendMsg"
                 v-model="mstext"
               />
               <div class="btnGroup">
@@ -44,19 +47,51 @@ export default{
 </script>
 <script setup>
 import SingleMessage from "../components/SingleMessage.vue";
-import { ref, defineProps, onBeforeMount, onUpdated, onMounted } from "vue";
+import { ref, onBeforeMount, onUpdated, onMounted, computed} from "vue";
 import { useRouter } from "vue-router";
-import { getHistoryByUID } from "../api/index.js";
+import {useStore} from 'vuex';
 let router = useRouter();
+let store = useStore();
 
 const props = defineProps({
   name: String,
 });
+
+
+//进入页面时获取历史消息列表
+let uid = router.currentRoute.value.params.uid;
+let msHistory = computed(()=>{return store.state[uid];})
+let uname = ref('');
+//用来判断聊天记录是否加载完
+let listOk = ref(false)
+onBeforeMount(async () => {
+  uname.value = uid;
+  let tp = await store.dispatch('getmslist',uid);
+  if(tp=='success'){
+    listOk.value = true;
+    
+  }
+});
+
+//发送消息
 let typing = ref(false);
 let mstext = ref("");
 let chatRef = ref([]);
 const setChatRef = (el) => {
   chatRef.value.push(el);
+};
+let scrollTo = function () {
+  //先判断是否加载完成，否则会出错
+  if(!listOk){
+    return
+  }
+  else{
+    let rf = chatRef.value[0];
+    if(rf.hasChildNodes()){
+      rf.lastElementChild.scrollIntoView();
+    }
+  }
+  
 };
 
 let checkType = (t) => {
@@ -70,30 +105,26 @@ let checkType = (t) => {
 let returnTo = function () {
   router.push("/message");
 };
-let msHistory = ref({});
-let scrollTo = function () {
-  let rf = chatRef.value[0];
-  rf.lastElementChild.scrollIntoView();
-};
-let uname = ref('');
-onBeforeMount(async () => {
-  uname.value = router.currentRoute.value.params.uid;
-  let tp = await getHistoryByUID(uname.value);
-  msHistory.value = tp.messages;
-});
+
+
+
 onUpdated((to, from) => {
   scrollTo();
 });
 
-let sendMsg = () => {
+let sendMsg = async() => {
+  let now = new Date();
   let msg = {
     user: "me",
+    to:uid,
     text: mstext.value,
+    sendTime:now.getFullYear()+'/'+now.getMonth()+'/'+now.getDay()+'-'+(now+'').split(' ')[4],
     time: "发送中...",
   };
-  msHistory.value.push(msg);
+  // msHistory.value.push(msg);
   typing.value = false;
   mstext.value = "";
+  store.dispatch('sendmsg',msg);
 };
 </script>
 <style scoped>

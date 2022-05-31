@@ -1,44 +1,40 @@
 let getHistoryByUID = function (uid) {
     let a = {
         status: 'success',
+        toUID:`${uid}`,
         messages: [
             {
-                user: 'zs',
+                user: `${uid}`,
                 text: '你好！',
                 time: '2022/5/16-21:00:05'
             },
             {
-                user: 'me',
+                user: `${uid}`,
                 text: '你好！',
                 time: '2022/5/16-21:01:05'
             },
             {
-                user: 'zs',
-                text: '你好你好！',
-                time: '2022/5/16-21:02:05'
-            },
-            {
-                user: 'me',
+                user: `${uid}`,
                 text: '哈哈哈！',
                 time: '2022/5/16-21:03:05'
             },
             {
-                user: 'me',
+                user: `me`,
                 text: '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈！',
                 time: '2022/5/16-21:04:05'
             },
             {
-                user: 'zs',
+                user: `${uid}`,
                 text: '你好！',
                 time: '2022/5/16-21:05:05'
             },
             {
-                user: 'me',
+                user: `me`,
                 text: '你好！',
                 time: '2022/5/16-21:06:05'
             },
             {
-                user: 'zs',
+                user: `${uid}`,
                 text: '你好你好！',
                 time: '2022/5/16-21:07:05'
             },
@@ -56,7 +52,7 @@ let getHistoryByUID = function (uid) {
 
     };
     return new Promise(resolve => {
-        setTimeout(() => { resolve(a) }, 300)
+        setTimeout(() => {resolve(a) },300)
     })
     // 
 }
@@ -119,7 +115,7 @@ let getCurrentTalkList = () => {
         }
     ]
     return new Promise((resolve, reject) => {
-        if (Math.random() > 0.1) {
+        if (Math.random() > 0.01) {
             setTimeout(() => {
                 resolve({
                     status: 'ok',

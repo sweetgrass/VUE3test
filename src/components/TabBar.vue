@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import {defineProps,defineEmits,ref,computed} from 'vue'
+import {ref,computed} from 'vue'
 
 // choosed可以由父组件传入，由父组件事件改变当前选择的tab，例如左右滑动切换，tabs为具体的按钮项，包含name为文本，type为每个tabBar是文字，图片，iconfont，containerHeight为自定义高度；
 const props = defineProps({

@@ -2,7 +2,7 @@
   <button @click='sendCode' :disabled='props.isSending'>{{btnText}}</button>
 </template>
 <script setup>
-import { ref, defineProps, computed,defineEmits} from "vue";
+import { ref, computed} from "vue";
 //countTime自定义倒计时时间
 //isSending可以将倒计时控制器交给父组件，以便进行错误处理
 let props = defineProps({
