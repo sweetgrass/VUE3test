@@ -1,14 +1,20 @@
 <template>
   <div class="alc">
     <div class="iconC"><slot name="icon"></slot></div>
-    <div class="textC" :class='[noBorder?"last":""]'>{{ props.bartext }}</div>
+    <div class="textC" :class='[noBorder?"last":""]'>{{ bartext }}</div>
+    <div v-if='hasBtn' class="operation" @click.stop='emit("btnClick",uid)'>{{btnText}}</div>
   </div>
 </template>
 <script setup>
 let props = defineProps({
   noBorder: Boolean,
   bartext: String,
+  uid:Number,
+  btnText:String,
+  hasBtn:Boolean
 });
+const emit = defineEmits(['btnClick'])
+
 </script>
 <style scoped>
 .alc {
@@ -41,5 +47,20 @@ let props = defineProps({
 }
 .last{
     border-bottom: 1px solid transparent;
+}
+.operation{
+  width:120px;
+  height:40px;
+  line-height: 40px;
+  background:rgb(0 159 105);
+  color:white;
+  position:absolute;
+  right:10px;
+  top:5px;
+  border-radius: 5px;
+  display: none;
+}
+.alc:hover > .operation{
+  display: block;
 }
 </style>

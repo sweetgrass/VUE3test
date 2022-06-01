@@ -26,8 +26,8 @@ const store = createStore({
     ctabGetter(state) {
       return state.currentTab;
     }
-
   },
+  //-------------------------------------------------------------------
   mutations: {
     getUserInfo(state, name) {
       state.userInfo.name = name
@@ -45,6 +45,31 @@ const store = createStore({
     //获取聊天列表
     getCurrentTalkList(state, list) {
       state.currentList = list;
+    },
+    deleteTalk(state, uid) {
+      let list = state.userlist;
+      let idx1 = list.findIndex(item => { return item == uid });
+      state.userlist.splice(idx1, 1);
+
+      let clist = state.currentList;
+      let idx2 = clist.findIndex(item => {
+        return item.to == uid
+      })
+      state.currentList.splice(idx2, 1);
+    },
+    upTalk(state, uid) {
+      let list = state.userlist;
+      let idx1 = list.findIndex(item => { return item == uid });
+      let user = state.userlist.splice(idx1, 1)[0];
+      state.userlist.unshift(user);
+
+      let clist = state.currentList;
+      let idx2 = clist.findIndex(item => {
+        return item.to == uid
+      })
+      let msg = state.currentList.splice(idx2, 1)[0];
+
+      state.currentList.unshift(msg);
     },
     //获取好友列表
     getFriends(state, flist) {
@@ -69,15 +94,16 @@ const store = createStore({
       let idx = 0;
       for (let i = 0; i < lst.length; i++) {
         let msgl = lst[i];
-        
+
         if (msgl.to == msg.to) {
           idx = i;
           break;
         }
       }
-      state.currentList.splice(idx,1,msg)
+      state.currentList.splice(idx, 1, msg)
     }
   },
+  //----------------------------------------------------------------------------------- 
   actions: {
     asyncGetUserInfo({ commit }) {
       setTimeout(() => {
@@ -112,30 +138,30 @@ const store = createStore({
         // 1、更新最近聊天用户列表
         // 2、在store中增加该用户的消息历史记录，虽然为空
         // 3、在最近聊天消息列表中增加一条空记录，让会话出现在message页面
-        if(!state.userlist.includes(uid)){
-            //将用户存入最近聊天用户列表
-            state.userlist.push(uid);
-            // 在store中增加该用户历史记录
-            let fres = {
-              toUID:uid,
-              messages:[]
-            }
-            commit('getMsgList',fres)
-            // 生成空白消息到最近聊天概览列表
-            let now = new Date();
-            state.currentList.push({
-              to:uid,
-              user:'me',
-              text:'',
-              time:now.getFullYear()+'/'+now.getMonth()+'/'+now.getDay()+'-'+(now+'').split(' ')[4]
-            })
+        if (!state.userlist.includes(uid)) {
+          //将用户存入最近聊天用户列表
+          state.userlist.push(uid);
+          // 在store中增加该用户历史记录
+          let fres = {
+            toUID: uid,
+            messages: []
+          }
+          commit('getMsgList', fres)
+          // 生成空白消息到最近聊天概览列表
+          let now = new Date();
+          state.currentList.push({
+            to: uid,
+            user: 'me',
+            text: '',
+            time: now.getFullYear() + '/' + now.getMonth() + '/' + now.getDay() + '-' + (now + '').split(' ')[4]
+          })
         }
         //否则直接api获取假数据
-        else{
+        else {
           let res = await getHistoryByUID(uid);
           commit('getMsgList', res);
         }
-        
+
         return 'success';
 
       }
@@ -155,15 +181,16 @@ const store = createStore({
           let mslist = state[uid];
           let msg = {};
           //如果只是打开过聊天对话框，那么该用户历史消息列表中不会有记录，则需要生成一条空白消息
-          if(mslist.length==0){
+          if (mslist.length == 0) {
+            let now = new Date();
             msg = {
-              to:uid,
-              user:'me',
-              text:'',
-              time:now.getFullYear()+'/'+now.getMonth()+'/'+now.getDay()+'-'+(now+'').split(' ')[4]
+              to: uid,
+              user: 'me',
+              text: '',
+              time: now.getFullYear() + '/' + now.getMonth() + '/' + now.getDay() + '-' + (now + '').split(' ')[4]
             }
           }
-          else{
+          else {
             msg = mslist[mslist.length - 1];
           }
           msg.to = uid;

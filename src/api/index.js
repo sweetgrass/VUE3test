@@ -6,21 +6,25 @@ let getHistoryByUID = function (uid) {
         messages: [
             {
                 user: `${uid}`,
+                to:'me',
                 text: '你好！',
                 time: '2022/5/16-21:00:05'
             },
             {
                 user: `${uid}`,
+                to:'me',
                 text: '你好！',
                 time: '2022/5/16-21:01:05'
             },
             {
                 user: `${uid}`,
+                to:'me',
                 text: '哈哈哈！',
                 time: '2022/5/16-21:03:05'
             },
             {
                 user: `me`,
+                to:`${uid}`,
                 text: `${Math.random()+''}`,
                 time: '2022/5/16-21:04:05'
             }

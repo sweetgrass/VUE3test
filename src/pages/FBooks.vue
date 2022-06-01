@@ -15,6 +15,10 @@
         :key="fr.uid" 
         :bartext="fr.un"
         :data-uid='fr.uid'
+        :uid='fr.uid'
+        btnText='聊天'
+        :hasBtn='true'
+        @btnClick='talkTo'
         ><template v-slot:icon
           ><div>{{ fr.un.replace("用户", "") }}</div></template
         ></IconBar
@@ -47,14 +51,17 @@ onBeforeMount(async () => {
 let router = useRouter();
 let friendInfo = (e) => {
   let path = e.path;
+  // if(e.target.className = 'operation'){return};
   for(let i = 0;i<path.length;i++){
-     
       if(path[i].className=='alc'){
           let uid = path[i].dataset.uid;
           router.push('/friendInfo/'+uid);
       }
   }
 };
+let talkTo = uid =>{
+  router.push('/talkTo/'+uid);
+}
 </script>
 <style scoped>
 .allc {

@@ -10,7 +10,7 @@
             </div>
             <div class="msg">{{props.item.text.substr(0,20)}}</div>
         </div>
-        
+        <slot></slot>
     </div>
 </template>
 <script setup>

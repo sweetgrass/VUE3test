@@ -136,6 +136,8 @@ let sendMsg = async() => {
   height: 6vh;
   background: rgb(245, 245, 245);
   position: relative;
+  height: 60px;
+  line-height: 60px;
 }
 .chatBox {
   margin-bottom: 60px;
@@ -144,8 +146,6 @@ let sendMsg = async() => {
 }
 .close {
   width: 60px;
-  height: 60px;
-  line-height: 60px;
   position: absolute;
   top: 0;
   left: 0;
@@ -154,9 +154,7 @@ let sendMsg = async() => {
 }
 .name {
   width: 100%;
-  height: 60px;
   text-align: center;
-  line-height: 60px;
 }
 .insertBox {
   width: 100%;
