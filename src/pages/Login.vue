@@ -178,6 +178,7 @@ let loginTo = async ()=>{
 .banner {
   width: 60%;
   height: 30px;
+  display: flex;
 }
 .logMode {
   font-size: 16px;

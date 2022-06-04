@@ -1,6 +1,6 @@
 <template>
     <div class="abtme">
-        <UserCard @click='aboutme' :user='user'>me</UserCard>
+        <UserCard @click='aboutme' :user='user'><template v-slot:uname>me</template><template v-slot:btn><div class='logOut' @click.stop='logout'>退出</div></template></UserCard>
         <div class="bottomarea">
             <div class="more">
                 <div class="funcslot">收藏</div>
@@ -16,12 +16,19 @@
 <script setup>
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
+import {useStore} from 'vuex';
 import UserCard from '../components/UserCard.vue'
 let user = ref({
     name:'是我',
     uid:123456
 })
+let store = useStore();
 let router = useRouter();
+let logout = ()=>{
+    console.log('logout......')
+    store.commit('logOut','')
+    router.push('/login');
+}
 let aboutme = ()=>{
     router.push('/about/me');
 }
@@ -30,7 +37,18 @@ let aboutme = ()=>{
 .abtme{
     position: relative;
 }
-
+.logOut{
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    background: #ef7474;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+}
 .bottomarea{
     position: relative;
 }

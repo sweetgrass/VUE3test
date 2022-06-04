@@ -48,6 +48,7 @@ let gotoLogin = ()=>{
     line-height: 60px;
     box-sizing: border-box;
     border-bottom: 2px solid;
+    text-align: left;
 }
 .gotoLogin{
     display: inline-block;

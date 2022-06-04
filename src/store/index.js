@@ -42,6 +42,9 @@ const store = createStore({
       state.isLogined = true;
       state.user = user;
     },
+    logOut(state,uid){
+      state.isLogined = false;
+    },
     //获取聊天列表
     getCurrentTalkList(state, list) {
       state.currentList = list;

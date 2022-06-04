@@ -1,10 +1,11 @@
 <template>
     <div class="shortcut" @click='aboutme'>
-            <div class="me" ><slot></slot></div>
+            <div class="me" ><slot name='uname'></slot></div>
             <div class="uinfo">
                 <div class="un">{{props.user.name}}</div>
                 <div class="uid">{{props.user.uid}}</div>
             </div>
+            <slot name='btn'></slot>
         </div>
 </template>
 <script setup>

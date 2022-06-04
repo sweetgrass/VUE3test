@@ -114,7 +114,7 @@ router.beforeEach(async (to, from) => {
     let name = pathTabName[toRootPath]
     store.commit('changeTab',name);
   }
-
+  //------------------------------------------------
   //-----------------登录验证部分--------------------
   let noneedLoginPage = ['login','reg']
   // 检查用户是否已登录 // ❗️ 避免无限重定向
