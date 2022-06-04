@@ -9,7 +9,7 @@
             </div>
             <!-- 使用iconFont的话，只需要改变颜色 -->
             <div v-if="type=='iconFont'" class="tabIcon">
-                <i class='item.icon'></i>
+                <i class='iconsetup icon iconfont' :class='item.icon'></i>
             </div>
             <div class="tabText" :style="{'line-height':type=='text'||type==''?containerHeight:''}">
                 {{item.name}}
@@ -69,6 +69,12 @@ const changeCurrent= (event)=>{
 }
 .router-link-active {
     text-decoration: none;
+}
+.tabText{
+    font-size: 14px;
+}
+.iconsetup{
+    font-size: 20px;
 }
 .tabBar{
     width:25%;

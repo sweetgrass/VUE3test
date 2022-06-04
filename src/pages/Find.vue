@@ -1,5 +1,5 @@
 <template>
-    <div>我是朋友圈</div>
+    <div></div>
 </template>
 <script setup>
 </script>

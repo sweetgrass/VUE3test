@@ -2,12 +2,12 @@
   <div class="container">
     <div v-if='store.state.isLogined'>
       <div  class="topbar">{{ currentTab }}</div>
-      <TabBar type="" :tabs="tabs" @tabChange="tabChange" containerHeight="60px" :choosed='currentTab'></TabBar>
+      <TabBar type="iconFont" :tabs="tabs" @tabChange="tabChange" containerHeight="60px" :choosed='currentTab'></TabBar>
     </div>
     
     <!-- 需要keep-alive 和 transition的router-view 都需要用此方法进行包裹 -->
     <router-view v-slot='{Component,route}'>
-      <keep-alive exclude="friend,talkto">
+      <keep-alive exclude="friend,talkto,login,reg">
         <component
             :is="Component"
             :key="route.meta.usePathKey ? route.path : undefined"
@@ -36,18 +36,22 @@ const tabs = ref([
   {
     name: "消息",
     path: "/message",
+    icon:"icon-chat"
   },
   {
     name: "通讯录",
     path: "/fBooks",
+    icon:'icon-addressbook'
   },
   {
     name: "发现",
     path: "/find",
+    icon:"icon-compass1"
   },
   {
     name: "关于",
     path: "/about",
+    icon:"icon-me"
   },
 ]);
 const tabChange = (name) => {

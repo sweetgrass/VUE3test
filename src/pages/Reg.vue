@@ -21,6 +21,11 @@
 <!-- </teleport> -->
     
 </template>
+<script>
+export default{
+  name:'reg'
+}
+</script>
 <script setup>
 import {useRouter} from 'vue-router';
 let router = useRouter();
@@ -41,6 +46,11 @@ let gotoLogin = ()=>{
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+@media screen and (max-width:650px) {
+    .regc{
+        width:80%;
+    }
 }
 .labelc{
     position: relative;

@@ -53,6 +53,11 @@
     </div>
   <!-- </teleport> -->
 </template>
+<script>
+export default{
+  name:'login'
+}
+</script>
 <script setup>
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -168,6 +173,11 @@ let loginTo = async ()=>{
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
+}
+@media screen and (max-width:650px) {
+    .loginContainer{
+        width:80%;
+    }
 }
 .head {
   display: flex;
